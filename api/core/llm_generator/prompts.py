@@ -66,6 +66,7 @@ SUGGESTED_QUESTIONS_AFTER_ANSWER_INSTRUCTION_PROMPT = (
     "and keeping each question under 20 characters.\n"
     "The output must be an array in JSON format following the specified schema:\n"
     "[\"question1\",\"question2\",\"question3\"]\n"
+    "请使用中文输出\n"
 )
 
 GENERATOR_QA_PROMPT = (

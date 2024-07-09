@@ -140,14 +140,14 @@ class SimplePromptTransform(PromptTransform):
                 prompt += prompt_rules['context_prompt']
                 special_variable_keys.append('#context#')
             elif order == 'pre_prompt' and pre_prompt:
-                prompt += pre_prompt + '\n'
+                prompt += pre_prompt + ('' if app_mode == AppMode.COMPLETION else '\n')
                 pre_prompt_template = PromptTemplateParser(template=pre_prompt)
                 custom_variable_keys = pre_prompt_template.variable_keys
             elif order == 'histories_prompt' and with_memory_prompt:
                 prompt += prompt_rules['histories_prompt']
                 special_variable_keys.append('#histories#')
 
-        if query_in_prompt:
+        if query_in_prompt and app_mode != AppMode.COMPLETION:
             prompt += prompt_rules['query_prompt'] if 'query_prompt' in prompt_rules else '{{#query#}}'
             special_variable_keys.append('#query#')
 
@@ -234,8 +234,8 @@ class SimplePromptTransform(PromptTransform):
                     )
                 ),
                 max_token_limit=rest_tokens,
-                human_prefix=prompt_rules['human_prefix'] if 'human_prefix' in prompt_rules else 'Human',
-                ai_prefix=prompt_rules['assistant_prefix'] if 'assistant_prefix' in prompt_rules else 'Assistant'
+                human_prefix=prompt_rules.get('human_prefix', 'Human'),
+                ai_prefix=prompt_rules.get('assistant_prefix', 'Assistant')
             )
 
             # get prompt
