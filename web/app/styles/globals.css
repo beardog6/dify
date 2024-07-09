@@ -1,6 +1,13 @@
+@import "preflight.css";
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
+
+@import '../../themes/light.css';
+@import '../../themes/dark.css';
+
+html[data-changing-theme] * {
+  transition: none !important;
+}
 
 :root {
   --max-width: 1100px;
@@ -148,3 +155,6 @@ button:focus-within {
 }
 
 @import '../components/base/button/index.css';
+@import '../components/base/modal/index.css';
+
+@tailwind utilities;

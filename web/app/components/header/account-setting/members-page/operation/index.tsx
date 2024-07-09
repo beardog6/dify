@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { Fragment } from 'react'
 import { useContext } from 'use-context-selector'
 import { Menu, Transition } from '@headlessui/react'
-import cn from 'classnames'
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/24/outline'
 import s from './index.module.css'
+import cn from '@/utils/classnames'
 import type { Member } from '@/models/common'
 import { deleteMemberOrCancelInvitation, updateMemberRole } from '@/service/common'
 import { ToastContext } from '@/app/components/base/toast'
@@ -36,6 +36,7 @@ const Operation = ({
   const RoleMap = {
     owner: t('common.members.owner'),
     admin: t('common.members.admin'),
+    editor: t('common.members.editor'),
     normal: t('common.members.normal'),
   }
   const { notify } = useContext(ToastContext)
@@ -98,7 +99,7 @@ const Operation = ({
               >
                 <div className="px-1 py-1">
                   {
-                    ['admin', 'normal'].map(role => (
+                    ['admin', 'editor', 'normal'].map(role => (
                       <Menu.Item key={role}>
                         <div className={itemClassName} onClick={() => handleUpdateMemberRole(role)}>
                           {
